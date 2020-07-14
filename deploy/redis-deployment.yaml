@@ -3,12 +3,7 @@ kind: Deployment
 metadata:
   name: redis
 spec:
-  progressDeadlineSeconds: 120
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: redis
