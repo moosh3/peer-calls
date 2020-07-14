@@ -108,10 +108,12 @@ func NewMux(
 		router.Get("/probes/liveness", func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
+      w.Write("OK")
 		})
 		router.Get("/probes/health", func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusOK)
+      w.Write("OK")
 		})
 		router.Get("/manifest.json", func(w http.ResponseWriter, r *http.Request) {
 			w.Header().Set("Content-Type", "application/json")
