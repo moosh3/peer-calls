@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
 - deploy/configmap.yaml
 - deploy/deployment.yaml
-- deploy/ingress.yaml
 - deploy/service.yaml
 - deploy/service-account.yaml
 - deploy/redis-deployment.yaml
