@@ -1,32 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: peercalls
+  name: peer-calls
 spec:
-  progressDeadlineSeconds: 120
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: peercalls
+      app.kubernetes.io/name: peer-calls
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: peercalls
+        app.kubernetes.io/name: peer-calls
     spec:
-      volumes:
       volumes:
       - name: config-volume
         configMap:
-          name: peercalls-config
+          name: peer-calls-config
       containers:
-      - name: peercalls
+      - name: peer-calls
         image: peercalls/peercalls
         imagePullPolicy: IfNotPresent
-        command: ["/bin/bash", -c", "peercalls", "--config", "/etc/peercalls/config.yaml"]
+        command: ["/app/peer-calls", "-c", "/etc/peer-calls/config.yaml"]
         ports:
         - name: http
           containerPort: 3000
@@ -40,7 +34,7 @@ spec:
           timeoutSeconds: 5
         readinessProbe:
           httpGet:
-            path: /probe/health
+            path: /probes/health
             port: http
           initialDelaySeconds: 5
           timeoutSeconds: 1  
@@ -53,7 +47,7 @@ spec:
             memory: 128Mi
         volumeMounts:
         - name: config-volume
-          mountPath: /etc/peercalls
+          mountPath: /etc/peer-calls
         securityContext:
           runAsNonRoot: true
           runAsUser: 1000
@@ -63,6 +57,6 @@ spec:
               command:
               - sleep
               - "10"
-      serviceAccountName: peercalls
+      serviceAccountName: peer-calls
       securityContext:
         fsGroup: 1000
